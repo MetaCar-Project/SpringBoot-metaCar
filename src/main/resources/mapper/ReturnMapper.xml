@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.ReturnMapper">
+
+
+
+    <resultMap type="com.example.dto.Have_CarDTO" id="HaveCar">
+        <id column="carnum" property="carNum"/>
+        <result column="carkind" property="carKind"/>
+        <result column="sczonenum" property="sczoneNum"/>
+        <result column="carmaking" property="carMaking"/>
+        <result column="carmodel" property="carModel"/>
+        <result column="cargas" property="carGas"/>
+        <result column="careff" property="carEff"/>
+        <result column="reservenow" property="reserveNow"/>
+        <association property="distanceDto" resultMap="Distance"></association>
+    </resultMap>
+
+    <resultMap type="com.example.dto.Rental_CarDTO" id="RentalCar">
+        <id column="reservenum" property="reserveNum"/>
+        <result column="id" property="id"/>
+        <result column="reservetime" property="reserveTime"/>
+        <result column="usetime" property="useTime"/>
+        <result column="returnadd" property="returnAdd"/>
+        <result column="sczonenum" property="sczoneNum"/>
+        <result column="carnum" property="carNum"/>
+        <result column="reservenow" property="reservenow"/>
+
+    </resultMap>
+
+    <update id="returnUpdate">
+        update have_car
+        set reservenow = 'x'
+        where carnum = #{carNum}
+    </update>
+
+    <insert id="carReturn" >
+        insert into return_car
+        values( #{reserveNum}, #{id}, sysdate, #{useTime})
+    </insert>
+
+    <update id="carReturnox">
+        update rental_car
+        set reservenow = 'x'
+        where reservenum = #{reserveNum}
+    </update>
+
+    <select id="getCarnum" resultType="string">
+        select carnum from rental_car
+        where reservenum = #{reserveNum}
+    </select>
+
+    <select id="getRental" resultType="com.example.dto.Rental_CarDTO">
+        select * from rental_car
+        where id= #{id}
+          and reservenow = 'o'
+    </select>
+</mapper>

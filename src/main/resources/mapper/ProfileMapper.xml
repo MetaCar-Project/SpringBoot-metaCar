@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.ProfileMapper">
+
+
+    <resultMap type="com.example.dto.Socar_MemberDTO" id="member">
+        <id column="id" property="id"/>
+        <result column="phone" property="phone"/>
+        <result column="name" property="name"/>
+        <association property="rentalCar" resultMap="rentalcar"></association>
+    </resultMap>
+
+    <resultMap type="com.example.dto.Rental_CarDTO" id="rentalcar">
+        <id column="carnum" property="carNum"/>
+        <result column="usetime" property="useTime"/>
+        <association property="haveCar" resultMap="havecar"/>
+    </resultMap>
+
+    <resultMap type="com.example.dto.Have_CarDTO" id="havecar">
+        <id column="carnum" property="carNum"/>
+        <result column="carmodel" property="carModel"/>
+
+        <association property="zoneCar" resultMap="zonecar"/>
+    </resultMap>
+
+    <resultMap type="com.example.dto.Zone_CarDTO" id="zonecar">
+        <id column="sczonenum" property="sczoneNum"/>
+        <result column="address" property="address"/>
+    </resultMap>
+
+
+    <select id="userDetail" resultMap="member">
+        select sm.id, phone, name, address, hc.carnum, carmodel, usetime
+        from socar_member sm, rental_car rc, zone_car zc, have_car hc
+        where sm.id=rc.id(+)
+          and rc.sczonenum = zc.sczonenum(+)
+          and rc.carnum = hc.carnum(+)
+          and sm.id = #{id}
+          and rc.reservenow = 'o'
+    </select>
+
+    <select id="userDetail2" resultMap="member">
+        select sm.id, phone, name
+        from socar_member sm, rental_car rc, zone_car zc, have_car hc
+        where sm.id=rc.id(+)
+          and rc.sczonenum = zc.sczonenum(+)
+          and rc.carnum = hc.carnum(+)
+          and sm.id = #{id}
+    </select>
+
+    <update id="userUpdate">
+        update socar_member
+        set phone = #{phone}
+        where id = #{id}
+    </update>
+
+
+
+
+</mapper>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.CarMapper">
+
+    <select id="cargetList"
+            resultType="com.example.dto.Have_CarDTO">
+		<![CDATA[
+        select * from have_car
+        ]]>
+	</select>
+
+    <select id="carWithPaginggetList"
+            resultType="kosa.metacar.dto.Have_CarDTO">
+   		<![CDATA[
+        SELECT carNum, carKind, sczonenum, carModel, carMaking,reserveNow FROM
+            (SELECT /*+INDEX_DESC(have_car carNum) */
+                 ROWNUM rn,carNum,carModel,carMaking,carKind,sczonenum,reserveNow
+             FROM have_car
+             WHERE
+                 (
+                         (
+                                     carKind = #{carSmall} OR
+                                     carKind = #{carMiddle} OR
+                                     carKind = #{carBig} OR
+                                     carKind = #{carSUV}
+                             )
+                         OR
+                         (
+                                 NULLIF(#{carSmall}, '') is null AND
+                                 NULLIF(#{carMiddle}, '') is null AND
+                                 NULLIF(#{carBig}, '') is null AND
+                                 NULLIF(#{carSUV}, '') is null
+                             )
+                     )
+               AND
+                 (
+                         (#{zoneType} = 0) OR
+                         ((#{zoneType} != 0) AND (sczonenum = #{zoneType}))
+                     )
+               AND (carModel LIKE '%'|| #{keyword} ||'%')
+               AND rownum <= #{pageNum} * #{amount})
+        where rn > (#{pageNum} - 1) * #{amount}
+        ]]>
+	</select>
+
+    <resultMap type="kosa.metacar.dto.Rental_CarDTO" id="rentalcar">
+        <id column="carnum" property="carNum"/>
+        <result column="usetime" property="useTime"/>
+        <association property="haveCar" resultMap="havecar"/>
+    </resultMap>
+
+    <resultMap type="kosa.metacar.dto.Have_CarDTO" id="havecar">
+        <id column="carnum" property="carNum"/>
+        <result column="carmodel" property="carModel"/>
+    </resultMap>
+
+    <select id="mainCar" resultMap="rentalcar">
+        select rc.id, rc.carnum , rc.usetime, hc.carmodel
+        from rental_car rc, have_car hc
+        where rc.carnum = hc.carnum
+          and rc.reservenow = 'o'
+          and rc.id= #{id}
+    </select>
+
+
+    <select id="cargetDetail"
+            resultType="kosa.metacar.dto.Have_CarDTO">
+        select * from have_car where carNum = #{carNum}
+    </select>
+
+
+</mapper>
