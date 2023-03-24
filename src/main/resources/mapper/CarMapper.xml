@@ -2,17 +2,17 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.mapper.CarMapper">
+<mapper namespace="com.example.metacar.mapper.CarMapper">
 
     <select id="cargetList"
-            resultType="com.example.dto.Have_CarDTO">
+            resultType="Have_CarDTO">
 		<![CDATA[
         select * from have_car
         ]]>
 	</select>
 
     <select id="carWithPaginggetList"
-            resultType="kosa.metacar.dto.Have_CarDTO">
+            resultType="Have_CarDTO">
    		<![CDATA[
         SELECT carNum, carKind, sczonenum, carModel, carMaking,reserveNow FROM
             (SELECT /*+INDEX_DESC(have_car carNum) */
@@ -45,13 +45,13 @@
         ]]>
 	</select>
 
-    <resultMap type="kosa.metacar.dto.Rental_CarDTO" id="rentalcar">
+    <resultMap type="Rental_CarDTO" id="rentalcar">
         <id column="carnum" property="carNum"/>
         <result column="usetime" property="useTime"/>
         <association property="haveCar" resultMap="havecar"/>
     </resultMap>
 
-    <resultMap type="kosa.metacar.dto.Have_CarDTO" id="havecar">
+    <resultMap type="Have_CarDTO" id="havecar">
         <id column="carnum" property="carNum"/>
         <result column="carmodel" property="carModel"/>
     </resultMap>
@@ -66,7 +66,7 @@
 
 
     <select id="cargetDetail"
-            resultType="kosa.metacar.dto.Have_CarDTO">
+            resultType="Have_CarDTO">
         select * from have_car where carNum = #{carNum}
     </select>
 

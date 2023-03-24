@@ -2,30 +2,30 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.mapper.ProfileMapper">
+<mapper namespace="com.example.metacar.mapper.ProfileMapper">
 
 
-    <resultMap type="com.example.dto.Socar_MemberDTO" id="member">
+    <resultMap type="Socar_MemberDTO" id="member">
         <id column="id" property="id"/>
         <result column="phone" property="phone"/>
         <result column="name" property="name"/>
         <association property="rentalCar" resultMap="rentalcar"></association>
     </resultMap>
 
-    <resultMap type="com.example.dto.Rental_CarDTO" id="rentalcar">
+    <resultMap type="Rental_CarDTO" id="rentalcar">
         <id column="carnum" property="carNum"/>
         <result column="usetime" property="useTime"/>
         <association property="haveCar" resultMap="havecar"/>
     </resultMap>
 
-    <resultMap type="com.example.dto.Have_CarDTO" id="havecar">
+    <resultMap type="Have_CarDTO" id="havecar">
         <id column="carnum" property="carNum"/>
         <result column="carmodel" property="carModel"/>
 
         <association property="zoneCar" resultMap="zonecar"/>
     </resultMap>
 
-    <resultMap type="com.example.dto.Zone_CarDTO" id="zonecar">
+    <resultMap type="Zone_CarDTO" id="zonecar">
         <id column="sczonenum" property="sczoneNum"/>
         <result column="address" property="address"/>
     </resultMap>
