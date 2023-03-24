@@ -2,11 +2,11 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.mapper.RentalMapper">
+<mapper namespace="com.example.metacar.mapper.RentalMapper">
 
 
 
-    <resultMap type="com.example.dto.Have_CarDTO" id="HaveCar">
+    <resultMap type="Have_CarDTO" id="HaveCar">
         <id column="carnum" property="carNum"/>
         <result column="carkind" property="carKind"/>
         <result column="sczonenum" property="sczoneNum"/>
@@ -18,7 +18,7 @@
         <association property="distanceDto" resultMap="Distance"></association>
     </resultMap>
 
-    <resultMap type="com.example.dto.Rental_CarDTO" id="RentalCar">
+    <resultMap type="Rental_CarDTO" id="RentalCar">
         <id column="reservenum" property="reserveNum"/>
         <result column="id" property="id"/>
         <result column="reservetime" property="reserveTime"/>
@@ -29,7 +29,7 @@
         <result column="reservenow" property="reservenow"/>
     </resultMap>
 
-    <resultMap type="com.example.dto.DistanceDTO" id="Distance">
+    <resultMap type="DistanceDTO" id="Distance">
         <id column="carkind" property="carkind"/>
         <result column="howmuch" property="howmuch"/>
     </resultMap>
@@ -74,18 +74,18 @@
         where reservenum = #{reserveNum}
     </select>
 
-    <select id="getCancel" resultType="com.example.dto.Cancel_CarDTO">
+    <select id="getCancel" resultType="Cancel_CarDTO">
         select * from cancel_car where id = #{id}
         ORDER BY reservenum
     </select>
 
-    <select id="getRental" resultType="com.example.dto.Rental_CarDTO">
+    <select id="getRental" resultType="Rental_CarDTO">
         select * from rental_car
         where id= #{id}
           and reservenow = 'o'
     </select>
 
-    <select id="canRental" resultType="com.example.dto.Rental_CarDTO">
+    <select id="canRental" resultType="Rental_CarDTO">
         select * from rental_car
         where carnum = #{carNum}
           and reservenow = 'o'

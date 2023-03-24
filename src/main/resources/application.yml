@@ -32,4 +32,4 @@ spring:
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml
-  type-aliases-package: com.example.metacar
+  type-aliases-package: com.example.metacar.dto

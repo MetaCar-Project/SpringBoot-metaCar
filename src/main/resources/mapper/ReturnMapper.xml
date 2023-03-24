@@ -2,11 +2,11 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.mapper.ReturnMapper">
+<mapper namespace="com.example.metacar.mapper.ReturnMapper">
 
 
 
-    <resultMap type="com.example.dto.Have_CarDTO" id="HaveCar">
+    <resultMap type="Have_CarDTO" id="HaveCar">
         <id column="carnum" property="carNum"/>
         <result column="carkind" property="carKind"/>
         <result column="sczonenum" property="sczoneNum"/>
@@ -18,7 +18,7 @@
         <association property="distanceDto" resultMap="Distance"></association>
     </resultMap>
 
-    <resultMap type="com.example.dto.Rental_CarDTO" id="RentalCar">
+    <resultMap type="Rental_CarDTO" id="RentalCar">
         <id column="reservenum" property="reserveNum"/>
         <result column="id" property="id"/>
         <result column="reservetime" property="reserveTime"/>
@@ -52,7 +52,7 @@
         where reservenum = #{reserveNum}
     </select>
 
-    <select id="getRental" resultType="com.example.dto.Rental_CarDTO">
+    <select id="getRental" resultType="Rental_CarDTO">
         select * from rental_car
         where id= #{id}
           and reservenow = 'o'
