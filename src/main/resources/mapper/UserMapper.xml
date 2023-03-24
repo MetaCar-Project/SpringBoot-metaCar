@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.mapper.UserMapper">
+<mapper namespace="com.example.metacar.mapper.UserMapper">
 
     <insert id="userCreate">
         insert into socar_member(id, password, phone, name, regnum)
@@ -14,7 +14,7 @@
         values (#{id}, 'ROLE_USER')
     </insert>
 
-    <resultMap type="com.example.dto.Socar_MemberDTO" id="socarmember">
+    <resultMap type="Socar_MemberDTO" id="socarmember">
         <id column="id" property="id"/>
         <result column="password" property="password"/>
         <result column="phone" property="phone"/>
@@ -24,7 +24,7 @@
         <collection property="roles" resultMap="auth"/>
     </resultMap>
 
-    <resultMap type="com.example.dto.Socar_Member_AuthDTO" id="auth">
+    <resultMap type="Socar_Member_AuthDTO" id="auth">
         <result column="id" property="id"/>
         <result column="auth" property="auth"/>
     </resultMap>
@@ -37,11 +37,11 @@
           and sm.id = #{id}
     </select>
 
-    <select id="userGet" resultType="com.example.dto.Socar_MemberDTO">
+    <select id="userGet" resultType="Socar_MemberDTO">
         SELECT id, name FROM socar_member WHERE id = #{id}
     </select>
 
-    <select id="idGet" resultType="com.example.dto.Socar_MemberDTO">
+    <select id="idGet" resultType="Socar_MemberDTO">
         select id from socar_member where id=#{id}
     </select>
 
