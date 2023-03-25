@@ -11,15 +11,15 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper mapper;
-    @Autowired
-    private PasswordEncoder pe;
+//    @Autowired
+//    private PasswordEncoder pe;
 
 
     @Override
     @Transactional
     public void createUser(Socar_MemberDTO sm) {
         String pw = sm.getPassword();
-        sm.setPassword(pe.encode(pw));
+//        sm.setPassword(pe.encode(pw));
         mapper.userCreate(sm);
         mapper.userRole(sm.getId());
     }

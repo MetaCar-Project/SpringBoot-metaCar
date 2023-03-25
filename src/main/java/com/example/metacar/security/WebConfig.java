@@ -14,11 +14,6 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                     .anyRequest().permitAll()
                 .and()
-                    .formLogin()
-                    .loginPage("/metaCar/login")
-                    .defaultSuccessUrl("/view/dashboard", true)
-                    .permitAll()
-                .and()
-                    .logout();
+                .csrf().disable();
     }
 }
