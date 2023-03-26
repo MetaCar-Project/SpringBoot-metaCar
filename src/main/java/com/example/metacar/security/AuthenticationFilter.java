@@ -37,7 +37,9 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
+        setFilterProcessesUrl("/metaCar/login");
         try{
+            System.out.println("attempAuthentication 호출");
             Socar_MemberDTO creds = new ObjectMapper().readValue(request.getInputStream(),
                     Socar_MemberDTO.class);
             Socar_MemberDTO sm = mapper.getUserByIdAndPassword(creds.getId());

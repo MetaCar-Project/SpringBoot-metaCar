@@ -32,6 +32,7 @@ public class RentalController {
     @PreAuthorize("isAuthenticated()")
     public Have_CarDTO goRental(@RequestParam("carNum") String carNum, Principal principal){
         String id = principal.getName();
+        System.out.println("carNum = " + carNum);
         System.out.println(id);
         Have_CarDTO hc = new Have_CarDTO();
         hc.setCarNum(carNum);

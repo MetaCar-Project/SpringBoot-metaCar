@@ -27,6 +27,8 @@ public class CustomUserDetailService implements UserDetailsService {
         System.out.println(username);
         System.out.println("================UserDetails Call===================");
         Socar_MemberDTO member = mapper.getUserByIdAndPassword(username);
+        System.out.println(username+"2323423423");
+        System.out.println(member);
         if(member == null){
             throw new UsernameNotFoundException("id : " + username + " is not found");
         }
