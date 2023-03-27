@@ -57,6 +57,7 @@ public class RentalController {
 
     @PostMapping("/rental")
     public ResponseEntity rentalCar(@RequestBody Rental_CarDTO rc){
+        System.out.println("=====retnal======" + rc);
         if(service.checkReserve(rc.getId()) || service.canReserve(rc.getCarNum())) {
             System.out.println("예약차량 있음");
             throw new RuntimeException("예약차량 있음");
@@ -64,5 +65,6 @@ public class RentalController {
         service.rentalCar(rc);
         return new ResponseEntity(HttpStatus.CREATED);
     }
+
 
 }
