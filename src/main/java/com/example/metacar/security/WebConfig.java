@@ -29,21 +29,24 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
-        http.authorizeRequests().antMatchers("/**").authenticated()
+
+        http.addFilter(authenticationFilter())
+                .addFilter(JwtFilter()).authorizeRequests()
+                .anyRequest()
+                    .authenticated()
                 .and()
                     .formLogin()
                 .and()
                     .logout();
 
-        http.authorizeRequests().antMatchers("/**")
-                .hasIpAddress("127.0.0.1")
-                .and()
-                .addFilter(authenticationFilter())
-                .addFilterAfter(JwtFilter(),AuthenticationFilter.class);
+
+//                .and()
+//                .addFilter(authenticationFilter())
+//                .addFilterAfter(JwtFilter(),AuthenticationFilter.class);
     }
 
-    private JwtFilter JwtFilter(){
-        return new JwtFilter();
+    private JwtFilter JwtFilter() throws Exception {
+        return new JwtFilter(authenticationManager(),mapper);
     }
     private AuthenticationFilter authenticationFilter() throws Exception {
         return new AuthenticationFilter(authenticationManager() ,mapper);
@@ -51,6 +54,7 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(customUserDetailService).passwordEncoder(passwordEncoder());
+
 
     }
 

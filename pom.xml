@@ -57,6 +57,14 @@
             <artifactId>mybatis-spring-boot-starter</artifactId>
             <version>2.3.0</version>
         </dependency>
+
+        <!--hateous-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-hateoas</artifactId>
+        </dependency>
+
+
         <!-- jwt-->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
