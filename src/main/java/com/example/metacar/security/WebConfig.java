@@ -29,10 +29,24 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring()
+                .antMatchers("/metaCar/checkid")
+                .antMatchers("/metaCar/main")
+                .antMatchers("/metaCar/signup");// 이 요청들에 대해서는 spring security 필터 체인을 적용하지 않겠다
+    }
+
+    @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
 
-        http.addFilter(authenticationFilter())
+        http.authorizeRequests()
+                .antMatchers("metaCar/signup").permitAll()
+                .antMatchers("metaCar/main").permitAll()
+                .antMatchers("metaCar/login").permitAll()
+                .antMatchers("metaCar/checkid").permitAll()
+                .and()
+                .addFilter(authenticationFilter())
                 .addFilter(JwtFilter()).authorizeRequests()
                 .anyRequest()
                 .authenticated()

@@ -67,13 +67,13 @@ public class RentalController {
     public ResponseEntity<String> cancel(@RequestBody Cancel_CarDTO cc) {
         service.cancelCar(cc);
 
-
         if (cc == null) {
             System.out.println("제대로된 정보 입력해주셈");
         }
 
         return new ResponseEntity<>("success", HttpStatus.OK);
     }
+
     @GetMapping("/rental/{carNum}")
     @PreAuthorize("isAuthenticated()")
     public Map goRental(@PathVariable("carNum") String carNum, Principal principal) {
@@ -96,6 +96,7 @@ public class RentalController {
 
     @PostMapping("/rental")
     public ResponseEntity rentalCar(@RequestBody Rental_CarDTO rc) {
+        System.out.println("=====retnal======" + rc);
         if (service.checkReserve(rc.getId()) || service.canReserve(rc.getCarNum())) {
             System.out.println("예약차량 있음");
             throw new RuntimeException("예약차량 있음");
