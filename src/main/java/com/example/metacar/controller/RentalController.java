@@ -68,12 +68,12 @@ public class RentalController {
         service.cancelCar(cc);
 
 
-        if(cc == null) {
+        if (cc == null) {
             System.out.println("제대로된 정보 입력해주셈");
         }
 
-        return new ResponseEntity<>("success",HttpStatus.OK);
-
+        return new ResponseEntity<>("success", HttpStatus.OK);
+    }
     @GetMapping("/rental/{carNum}")
     @PreAuthorize("isAuthenticated()")
     public Map goRental(@PathVariable("carNum") String carNum, Principal principal) {
