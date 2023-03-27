@@ -6,4 +6,6 @@ public interface UserService {
     public void createUser(Socar_MemberDTO sm);
 
     public boolean getId(String id);
+
+    public Socar_MemberDTO getUserByIdAndPassword(String id);
 }
