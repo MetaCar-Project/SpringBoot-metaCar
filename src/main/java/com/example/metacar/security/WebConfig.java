@@ -18,13 +18,13 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
     private UserMapper mapper;
     private CustomUserDetailService customUserDetailService;
 
-    public WebConfig(UserMapper mapper, CustomUserDetailService customUserDetailService){
-        this.mapper=mapper;
-        this.customUserDetailService=customUserDetailService;
+    public WebConfig(UserMapper mapper, CustomUserDetailService customUserDetailService) {
+        this.mapper = mapper;
+        this.customUserDetailService = customUserDetailService;
     }
 
     @Bean
-    public BCryptPasswordEncoder passwordEncoder(){
+    public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
@@ -40,8 +40,6 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
 
-
-
         http.authorizeRequests()
                 .antMatchers("metaCar/signup").permitAll()
                 .antMatchers("metaCar/main").permitAll()
@@ -51,30 +49,38 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
                 .addFilter(authenticationFilter())
                 .addFilter(JwtFilter()).authorizeRequests()
                 .anyRequest()
-                    .authenticated()
+                .authenticated()
                 .and()
-                    .formLogin()
+                .formLogin()
                 .and()
-                    .logout();
+                .logout();
 
-
-//                .and()
-//                .addFilter(authenticationFilter())
-//                .addFilterAfter(JwtFilter(),AuthenticationFilter.class);
+        // .and()
+        // .addFilter(authenticationFilter())
+        // .addFilterAfter(JwtFilter(),AuthenticationFilter.class);
     }
 
     private JwtFilter JwtFilter() throws Exception {
-        return new JwtFilter(authenticationManager(),mapper);
+        return new JwtFilter(authenticationManager(), mapper);
     }
+
     private AuthenticationFilter authenticationFilter() throws Exception {
-        return new AuthenticationFilter(authenticationManager() ,mapper);
+        return new AuthenticationFilter(authenticationManager(), mapper);
     }
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(customUserDetailService).passwordEncoder(passwordEncoder());
 
-
     }
 
-
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring()
+                .antMatchers("/metaCar/checkid")
+                .antMatchers("/metaCar/main")
+                .antMatchers("/metaCar/signin")
+                .antMatchers("/metaCar/profile/{id}")
+                .antMatchers("/metaCar/cancel/{id}");
+    }
 }
