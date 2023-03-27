@@ -15,11 +15,9 @@ public class ReturnController {
     private ReturnService returnService;
 
     @PostMapping("/return")
-    public ResponseEntity<String> returnCar(@RequestBody Return_CarDTO returnCarDTO){
+    public ResponseEntity<String> returnCar(@RequestBody Return_CarDTO returnCarDTO) {
         returnCarDTO.getId();
         returnService.returnCar(returnCarDTO.getId());
-
-
 
         return new ResponseEntity<>("Success", HttpStatus.OK);
     }
