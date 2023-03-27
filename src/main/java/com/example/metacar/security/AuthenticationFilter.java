@@ -33,11 +33,12 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     public AuthenticationFilter(AuthenticationManager authenticationManager,UserMapper mapper){
         super.setAuthenticationManager(authenticationManager);
         this.mapper = mapper;
+        setFilterProcessesUrl("/metaCar/login");
     }
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-        setFilterProcessesUrl("/metaCar/login");
+
         try{
             System.out.println("attempAuthentication 호출");
             Socar_MemberDTO creds = new ObjectMapper().readValue(request.getInputStream(),

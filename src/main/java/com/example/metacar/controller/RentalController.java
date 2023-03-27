@@ -85,6 +85,7 @@ public class RentalController {
         Map<String, Object> map = new HashMap<>();
         Have_CarDTO hc = new Have_CarDTO();
         hc.setCarNum(carNum);
+        System.out.println("carNUM  ::::: " + carNum);
         Have_CarDTO have_carDTO = service.getCar(hc);
         map.put("car", have_carDTO);
         map.put("user", sm);
