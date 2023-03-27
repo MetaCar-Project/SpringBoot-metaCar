@@ -2,7 +2,9 @@ package com.example.metacar.controller;
 
 import com.example.metacar.dto.Have_CarDTO;
 import com.example.metacar.dto.Rental_CarDTO;
+import com.example.metacar.dto.Socar_MemberDTO;
 import com.example.metacar.service.RentalService;
+import com.example.metacar.service.UserService;
 import com.sun.security.auth.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
@@ -20,27 +22,36 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.net.URI;
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/metaCar")
 public class RentalController {
     @Autowired
     private RentalService service;
+    @Autowired
+    private UserService userService;
 
-    @GetMapping("/rental")
+    @GetMapping("/rental/{carNum}")
     @PreAuthorize("isAuthenticated()")
-    public Have_CarDTO goRental(@RequestParam("carNum") String carNum, Principal principal){
+    public Map goRental(@PathVariable("carNum") String carNum, Principal principal){
         String id = principal.getName();
         System.out.println("carNum = " + carNum);
         System.out.println(id);
+        Socar_MemberDTO sm = userService.getUserByIdAndPassword(id);
+        System.out.println(sm);
+        Map<String, Object> map = new HashMap<>();
         Have_CarDTO hc = new Have_CarDTO();
         hc.setCarNum(carNum);
         Have_CarDTO have_carDTO = service.getCar(hc);
+        map.put("car", have_carDTO);
+        map.put("user", sm);
         if(have_carDTO==null){
             throw new RuntimeException("no Car");
         }
-        return have_carDTO;
+        return map;
     }
 
 

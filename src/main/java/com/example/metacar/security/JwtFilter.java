@@ -10,6 +10,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import javax.servlet.*;
@@ -52,6 +53,9 @@ public class JwtFilter extends BasicAuthenticationFilter {
 
             String name = Jwts.parser().setSigningKey("hello").parseClaimsJws(jwt).getBody().getSubject();
             Socar_MemberDTO sm = mapper.getUserByIdAndPassword(name);
+            if(sm==null){
+                throw new UsernameNotFoundException("유저없음");
+            }
             UserDetails user = User.builder()
                     .username(sm.getId())
                     .password(sm.getPassword())

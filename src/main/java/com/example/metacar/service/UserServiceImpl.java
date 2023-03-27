@@ -31,4 +31,9 @@ public class UserServiceImpl implements UserService {
         return mapper.idGet(id)==null? false : true;
     }
 
+    @Override
+    public Socar_MemberDTO getUserByIdAndPassword(String id) {
+        return mapper.getUserByIdAndPassword(id);
+    }
+
 }

@@ -7,4 +7,5 @@ public interface UserService {
 
     public boolean getId(String id);
 
+    public Socar_MemberDTO getUserByIdAndPassword(String id);
 }
