@@ -4,13 +4,11 @@ import com.example.metacar.dto.Cancel_CarDTO;
 import com.example.metacar.dto.Rental_CarDTO;
 import com.example.metacar.dto.Socar_MemberDTO;
 import com.example.metacar.service.ProfileService;
+import com.example.metacar.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -22,6 +20,8 @@ public class ProfileController {
 
     @Autowired
     private ProfileService service;
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/profile/{id}")
     public ResponseEntity<Socar_MemberDTO> profile(@PathVariable("id") String id){
@@ -34,5 +34,17 @@ public class ProfileController {
         }
         return new ResponseEntity<>(socar_memberDTO,status);
 
+    }
+
+    @PostMapping("/profile/{id}")
+    public ResponseEntity<Socar_MemberDTO> modifyUser(@PathVariable("id") String uid, @RequestBody Socar_MemberDTO sm) {
+        String id = sm.getId();
+
+        Socar_MemberDTO socar_memberDTO = userService.getUserByIdAndPassword(id);
+
+        socar_memberDTO.setPhone(sm.getPhone());
+        service.updateUser(socar_memberDTO);
+
+        return new ResponseEntity<>(socar_memberDTO, HttpStatus.OK);
     }
 }
