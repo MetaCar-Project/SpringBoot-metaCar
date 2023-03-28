@@ -12,14 +12,17 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper mapper;
 
-    //private PasswordEncoder pe;
+    @Autowired
+    private PasswordEncoder pe;
 
 
     @Override
     @Transactional
     public void createUser(Socar_MemberDTO sm) {
+        System.out.println("Service" + sm);
         String pw = sm.getPassword();
-        //sm.setPassword(pe.encode(pw));
+        sm.setPassword(pe.encode(pw));
+        System.out.println("serve222222" + sm);
         mapper.userCreate(sm);
         mapper.userRole(sm.getId());
     }

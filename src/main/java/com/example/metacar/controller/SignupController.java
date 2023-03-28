@@ -26,6 +26,7 @@ public class SignupController {
     @PostMapping("/signup")
     public ResponseEntity addAccount(@RequestBody Socar_MemberDTO sm) {
         System.out.println(sm);
+
         service.createUser(sm);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
