@@ -8,6 +8,7 @@ import com.example.metacar.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -22,9 +23,12 @@ public class  MainController {
     private CarService carService;
 
     @GetMapping("/metaCar/main")
-    public List<Have_CarDTO> main(Criteria cri) {
+    public List<Have_CarDTO> main(Criteria cri, Model model) {
+        model.addAttribute("list",carService.carWithPaginggetList(cri));
+    
         return carService.carWithPaginggetList(cri);
     }
+
 
     @GetMapping("/metaCar/detail/{carNum}")
     public Have_CarDTO detail(@PathVariable("carNum") String carNum){
@@ -38,4 +42,10 @@ public class  MainController {
         response.setHeader("Content-Type", "application/json;charset=utf-8");
         return new ResponseEntity<Rental_CarDTO> (carService.carMain(checkid), HttpStatus.OK);
     }
+
+    @GetMapping("/page")
+    public PageDTO page(){
+        return (carService.carPageInfo());
+    }
+
 }
