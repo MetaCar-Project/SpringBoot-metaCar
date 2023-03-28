@@ -11,6 +11,7 @@ import java.util.List;
 public interface CarMapper {
     public List<Have_CarDTO> cargetList();
     public List<Have_CarDTO> carWithPaginggetList(Criteria cri);
+    public Integer carCnt();
     public Have_CarDTO cargetDetail(String carNum);
     public Rental_CarDTO mainCar (String id);
 

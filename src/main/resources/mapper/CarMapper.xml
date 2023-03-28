@@ -11,6 +11,10 @@
         ]]>
 	</select>
 
+    <select id="carCnt" resultType="Integer">
+        <![CDATA[ SELECT COUNT(*) from have_car ]]>
+    </select>
+
     <select id="carWithPaginggetList"
             resultType="Have_CarDTO">
    		<![CDATA[

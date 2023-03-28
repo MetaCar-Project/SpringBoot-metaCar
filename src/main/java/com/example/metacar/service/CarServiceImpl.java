@@ -2,6 +2,7 @@ package com.example.metacar.service;
 
 import com.example.metacar.dto.Criteria;
 import com.example.metacar.dto.Have_CarDTO;
+import com.example.metacar.dto.PageDTO;
 import com.example.metacar.dto.Rental_CarDTO;
 import com.example.metacar.mapper.CarMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,15 @@ public class CarServiceImpl implements CarService {
     @Override
     public List<Have_CarDTO> carWithPaginggetList(Criteria cri) {
         return mapper.carWithPaginggetList(cri);
+    }
+
+    @Override
+    public PageDTO carPageInfo() {
+        PageDTO page = new PageDTO(new Criteria(), mapper.carCnt());
+
+        page.setTotal(mapper.carCnt());
+        page.setStartPage(0);
+        return page;
     }
 
     @Override
