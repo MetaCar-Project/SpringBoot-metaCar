@@ -43,7 +43,7 @@ public class  MainController {
         return new ResponseEntity<Rental_CarDTO> (carService.carMain(checkid), HttpStatus.OK);
     }
 
-    @GetMapping("/page")
+    @GetMapping("/metaCar/page")
     public PageDTO page(){
         return (carService.carPageInfo());
     }

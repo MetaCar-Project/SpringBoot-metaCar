@@ -45,6 +45,8 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("metaCar/signup").permitAll()
                 .antMatchers("metaCar/main").permitAll()
                 .antMatchers("/metaCar/main").permitAll()
+                .antMatchers("/metaCar/page").permitAll()
+                .antMatchers("metaCar/page").permitAll()
                 .antMatchers("metaCar/login").permitAll()
                 .antMatchers("/metaCar/login").permitAll()
                 .antMatchers("metaCar/checkid").permitAll()
