@@ -33,6 +33,7 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
         web.ignoring()
                 .antMatchers("/metaCar/checkid")
                 .antMatchers("/metaCar/main")
+                .antMatchers("/metaCar/page")
                 .antMatchers("/metaCar/signup");// 이 요청들에 대해서는 spring security 필터 체인을 적용하지 않겠다
     }
 
@@ -43,7 +44,9 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("metaCar/signup").permitAll()
                 .antMatchers("metaCar/main").permitAll()
+                .antMatchers("/metaCar/main").permitAll()
                 .antMatchers("metaCar/login").permitAll()
+                .antMatchers("/metaCar/login").permitAll()
                 .antMatchers("metaCar/checkid").permitAll()
                 .and()
                 .addFilter(authenticationFilter())
